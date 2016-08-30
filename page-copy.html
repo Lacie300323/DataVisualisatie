@@ -1,0 +1,71 @@
+<html>
+  <head>
+	
+	<meta charset="utf-8">
+	<title>Datavisualisatie</title>
+	
+	<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type='text/javascript'>
+	
+	 $(document).ready(function () {
+	 
+		var arr=[];
+		$.ajax({
+            type: 'POST',
+            url: "dataset.json",
+            dataType: "json",
+            success: function (response) {
+
+               for (var i = 0; i < response.length; i++) {
+                   var temp=[];
+                  var str=response[i].split(':');
+                  temp[0]=str[0];
+                  temp[1]=parseInt(str[1]);
+                  temp[2]=parseInt(str[2]);
+                  temp[2]=parseInt(str[3]);
+                  temp[2]=parseInt(str[4]);
+                  temp[2]=parseInt(str[5]);
+                  temp[2]=parseInt(str[6]);
+                  temp[2]=parseInt(str[7]);
+                  temp[2]=parseInt(str[8]);
+                  temp[2]=parseInt(str[9]);
+                  temp[2]=parseInt(str[10]);
+                  temp[2]=parseInt(str[11]);
+                  temp[2]=parseInt(str[12]);
+
+                  arr[i]=temp;
+               }
+			    google.load('visualization', '1', {'packages': ['geochart']});
+				google.setOnLoadCallback(drawMarkersMap);
+            }
+
+         });
+
+		function drawMarkersMap() {
+          var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Country');
+			data.addColumn('number', 'Coal');
+			data.addColumn('number', 'Oil');
+			data.addColumn('number', 'Gas');
+			data.addColumn('number', 'Nuclear');
+			data.addColumn('number', 'Biomass and Waste Elec');	
+			data.addRows(arr);
+    
+			var options = {
+			region: 'IT',
+			displayMode: 'markers',
+			colorAxis: {colors: ['green', 'blue']}
+			};
+
+			var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		};
+	});
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 300px; height: 300px;"></div>
+  </body>
+</html>
