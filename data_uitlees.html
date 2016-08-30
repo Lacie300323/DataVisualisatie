@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Datavisualisatie</title>
+		<link rel="stylesheet" href="css/index.css?">
+			
+		<!-- Json inladen -->
+		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script type="text/javascript">
+		
+        $(document).ready(function () {
+
+            $.ajax({
+                        url: "dataset.json",
+                        dataType: "json",
+                        success: appendData
+                    }
+            );
+
+            function appendData(data) {
+
+                data.countries.forEach(function (countries) {
+
+                    $('#content').append('<div class="countryname"><h2>' + countries.Country + '</h2></div>')
+                            .append('<h3>Oil</h3><div class="bar">' + countries.Oil + '</div>')
+                            .append('<h3>Biodiesel</h3><div class="bar">' + countries.Biodiesel + '</div>')
+                            .append('<h3>Coal</h3><div class="bar">' + countries.Coal + '</div>')
+                            .append('<h3>Nuclear</h3><div class="bar">' + countries.Nuclear + '</div>')
+                            .append('<h3>Gas</h3><div class="bar">' + countries.Gas + '</div>')
+							
+							;
+                });
+            }
+        });
+    </script>
+	</head>
+
+	<body>
+		<div id="chart_div"></div>
+		<div id="content"></div>		
+	</body>
+
+</html>
